@@ -26,3 +26,15 @@ def getNote(request, pk):
     # 'many' specifies that we are serializing one object
     serializer = NoteSerializer(note, many=False)
     return Response(serializer.data)
+
+# PUT is for partial update of items
+@api_view(['PUT'])
+def updateNote(request, pk):
+    data = request.data
+    note = Notes.objects.get(id=pk)
+    serializer = NoteSerializer(instance=note, data=data)
+    
+    if serializer.is_valid():
+        serializer.save()
+        
+    return Response(serializer.data)
