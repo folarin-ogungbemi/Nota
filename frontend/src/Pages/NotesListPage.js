@@ -1,4 +1,5 @@
 import React from 'react'
+import ListItem from '../components/ListItem'
 
 const NotesListPage = () => {
 
@@ -11,18 +12,22 @@ const NotesListPage = () => {
     let getNotes = async () => {
         let response = await fetch('/api/notes/')
         let data = await response.json()
-        console.log("DATA", data)
         setNotes(data)
     }
 
   return (
-    <div>
-        <div>
-            {notes.map((note, index) => (
-                <h3 key={index}>{note.body}</h3>
-            ))}
+    <div className="notes">
+            <div className="notes-header">
+                <h2 className="notes-title">&#9782; Notes</h2>
+                <p className="notes-count">{notes.length}</p>
+            </div>
+
+            <div className="notes-list">
+                {notes.map((note, index) => (
+                    <ListItem key={index} note={note} />
+                ))}
+            </div>
         </div>
-    </div>
   )
 }
 
